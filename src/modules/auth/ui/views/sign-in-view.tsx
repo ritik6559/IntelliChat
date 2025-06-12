@@ -12,7 +12,6 @@ import {OctagonAlertIcon} from "lucide-react";
 import {Card, CardContent} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
 import {authClient} from "@/lib/auth-client";
 
 const formSchema = z.object({
@@ -22,7 +21,6 @@ const formSchema = z.object({
 
 const SignInView = () => {
 
-    const router = useRouter();
 
     const [error, setError] = React.useState<string | null>(null);
     const [loading, setLoading] = React.useState(false);
@@ -42,9 +40,9 @@ const SignInView = () => {
         authClient.signIn.email({
             email: data.email,
             password: data.password,
+            callbackURL: "/"
         },{
             onSuccess: () => {
-                router.push("/");
                 setLoading(false);
 
             },
@@ -54,7 +52,26 @@ const SignInView = () => {
 
             },
         });
+    }
 
+    const onSocialSubmit = (provider: "github" | "google") => {
+        setError(null);
+        setLoading(true);
+
+        authClient.signIn.social({
+            provider: provider,
+            callbackURL: "/"
+        },{
+            onSuccess: () => {
+                setLoading(false);
+
+            },
+            onError: ({error}) => {
+                setError(error.message)
+                setLoading(false);
+
+            },
+        });
     }
 
     return (
@@ -155,6 +172,7 @@ const SignInView = () => {
                                         variant={"outline"}
                                         type={"button"}
                                         className={"w-full cursor-pointer "}
+                                        onClick={() => onSocialSubmit("google")}
                                     >
                                         Google
                                     </Button>
@@ -162,6 +180,7 @@ const SignInView = () => {
                                         variant={"outline"}
                                         type={"button"}
                                         className={"w-full cursor-pointer "}
+                                        onClick={() => onSocialSubmit("github")}
                                     >
                                         Github
                                     </Button>
