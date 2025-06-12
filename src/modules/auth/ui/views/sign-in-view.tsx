@@ -12,6 +12,8 @@ import {OctagonAlertIcon} from "lucide-react";
 import {Card, CardContent} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
+import {authClient} from "@/lib/auth-client";
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -19,6 +21,11 @@ const formSchema = z.object({
 });
 
 const SignInView = () => {
+
+    const router = useRouter();
+
+    const [error, setError] = React.useState<string | null>(null);
+    const [loading, setLoading] = React.useState(false);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -28,7 +35,27 @@ const SignInView = () => {
         }
     });
 
+    const onSubmit = (data: z.infer<typeof formSchema>) => {
+        setError(null);
+        setLoading(true);
 
+        authClient.signIn.email({
+            email: data.email,
+            password: data.password,
+        },{
+            onSuccess: () => {
+                router.push("/");
+                setLoading(false);
+
+            },
+            onError: ({error}) => {
+                setError(error.message)
+                setLoading(false);
+
+            },
+        });
+
+    }
 
     return (
         <div
@@ -45,6 +72,7 @@ const SignInView = () => {
                     >
                         <form
                             className={"p-6 md:p-8"}
+                            onSubmit={form.handleSubmit(onSubmit)}
                         >
                             <div className={"flex flex-col gap-6"} >
                                 <div
@@ -102,14 +130,18 @@ const SignInView = () => {
                                     />
                                 </div>
                                 {
-                                    true && (
+                                    !!error && (
                                         <Alert className={"bg-destructive/10 border-none"} >
-                                            <OctagonAlertIcon className={"size-4 !text-desctructive"} />
-                                            <AlertTitle>Error</AlertTitle>
+                                            <OctagonAlertIcon className={"size-4 !text-destructive"} />
+                                            <AlertTitle>{error}</AlertTitle>
                                         </Alert>
                                     )
                                 }
-                                <Button>
+                                <Button
+                                    type={"submit"}
+                                    className={"w-full"}
+                                    disabled={loading}
+                                >
                                     Sign In
                                 </Button>
                                 <div className={"after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t"} >
@@ -122,14 +154,14 @@ const SignInView = () => {
                                     <Button
                                         variant={"outline"}
                                         type={"button"}
-                                        className={"w-full"}
+                                        className={"w-full cursor-pointer "}
                                     >
                                         Google
                                     </Button>
                                     <Button
                                         variant={"outline"}
                                         type={"button"}
-                                        className={"w-full"}
+                                        className={"w-full cursor-pointer "}
                                     >
                                         Github
                                     </Button>
@@ -159,10 +191,6 @@ const SignInView = () => {
                     </div>
                 </CardContent>
             </Card>
-
-            <div>
-
-            </div>
         </div>
 
     );
