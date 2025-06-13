@@ -1,23 +1,22 @@
 import React from 'react';
-import {Card} from "@/components/ui/card";
-import SignInView from "@/modules/auth/ui/views/sign-in-view";
+import HomeView from "@/modules/home/ui/view/home_view";
 import {auth} from "@/lib/auth";
 import {headers} from "next/headers";
 import {redirect} from "next/navigation";
 
-const SignIn = async () => {
+const Page = async () => {
 
     const session = await auth.api.getSession({
         headers: await headers(),
     });
 
-    if( !!session ) {
-        redirect('/')
+    if( !session ) {
+        redirect('/sign-in')
     }
 
     return (
-        <SignInView />
+        <HomeView />
     );
 };
 
-export default SignIn;
+export default Page;

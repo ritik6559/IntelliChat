@@ -13,6 +13,8 @@ import {Card, CardContent} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {authClient} from "@/lib/auth-client";
+import {useRouter} from "next/navigation";
+import {FaGithub, FaGoogle} from "react-icons/fa";
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -29,6 +31,8 @@ const SignUpView = () => {
 
     const [error, setError] = React.useState<string | null>(null);
     const [loading, setLoading] = React.useState(false);
+
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -52,6 +56,7 @@ const SignUpView = () => {
         },{
             onSuccess: () => {
                 setLoading(false);
+                router.push("/")
 
             },
             onError: ({error}) => {
@@ -227,7 +232,7 @@ const SignUpView = () => {
                                         className={"w-full cursor-pointer "}
                                         onClick={() => onSocialSubmit("google")}
                                     >
-                                        Google
+                                        <FaGoogle />
                                     </Button>
                                     <Button
                                         variant={"outline"}
@@ -235,7 +240,7 @@ const SignUpView = () => {
                                         className={"w-full cursor-pointer "}
                                         onClick={() => onSocialSubmit("github")}
                                     >
-                                        Github
+                                        <FaGithub />
                                     </Button>
                                 </div>
                                 <div className={"text-center text-sm"} >
@@ -248,7 +253,7 @@ const SignUpView = () => {
 
 
                     <div
-                        className={"bg-radial from-green-700 to-green-900 relative hidden md:flex flex-col gap-y-4 items-center justify-center"}
+                        className={"bg-radial from-sidebar-accent to-sidebar relative hidden md:flex flex-col gap-y-4 items-center justify-center"}
                     >
                         <img
                             src={"/logo.svg"}
