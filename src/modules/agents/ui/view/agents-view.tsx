@@ -9,7 +9,7 @@ import {DataTable} from "@/components/data-table";
 import {columns} from "@/modules/agents/ui/components/column";
 import EmptyState from "@/components/empty-state";
 import { useAgentsFilters } from '../../hooks/use-agents-filters';
-import AgentsDataPagination from "@/modules/agents/ui/components/agents-data-pagination";
+import DataPagination from "@/components/data-pagination";
 import {useRouter} from "next/navigation";
 
 const AgentsView = () => {
@@ -31,7 +31,7 @@ const AgentsView = () => {
                 data={data.items}
                 onRowClick={(row) => router.push(`/agents/${row.id}`)}
             />
-            <AgentsDataPagination
+            <DataPagination
                 page={filters.page}
                 totalPages={data.totalPages}
                 onPageChange={(page) => setFilters({ page })}

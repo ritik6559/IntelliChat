@@ -2,12 +2,30 @@
 
 import React, {useState} from 'react';
 import {Button} from "@/components/ui/button";
-import {PlusIcon} from "lucide-react";
+import {PlusIcon, XCircleIcon} from "lucide-react";
 import NewMeetingDialog from "@/modules/meetings/ui/components/new-meeting-dialog";
+import MeetingsSearchFilter from "@/modules/meetings/ui/components/meetings-search-filter";
+import StatusFilter from "@/modules/meetings/ui/components/status-filter";
+import AgentIdFilters from "@/modules/meetings/ui/components/agent-id-filters";
+import {useMeetingsFilter} from "@/modules/meetings/hooks/use-meetings-filter";
+import {ScrollArea, ScrollBar} from "@/components/ui/scroll-area";
 
 const MeetingsListHeader = () => {
 
+    const [filters, setFilters] = useMeetingsFilter();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+    const isAnyFilterModified =
+        !!filters.status || !!filters.search || !!filters.agentId;
+
+    const onClearFilters = () => {
+        setFilters({
+            status: null,
+            agentId: "",
+            search: "",
+            page: 1
+        })
+    }
 
     return (
         <>
@@ -24,9 +42,23 @@ const MeetingsListHeader = () => {
                         New Meeting
                     </Button>
                 </div>
-                <div className={"flex items-center gap-x-2 p-1"} >
+                <ScrollArea>
 
-                </div>
+                    <div className={"flex items-center gap-x-2 p-1"} >
+                        <MeetingsSearchFilter />
+                        <StatusFilter />
+                        <AgentIdFilters />
+                        {
+                            isAnyFilterModified && (
+                                <Button variant={"outline"} onClick={onClearFilters} >
+                                    <XCircleIcon className={"size-4"} />
+                                    CLear
+                                </Button>
+                            )
+                        }
+                    </div>
+                    <ScrollBar orientation={"horizontal"} />
+                </ScrollArea>
             </div>
         </>
     );

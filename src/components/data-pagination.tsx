@@ -7,7 +7,7 @@ interface Props {
     onPageChange: (page: number) => void,
 }
 
-const AgentsDataPagination = ({
+const DataPagination = ({
     page,
     totalPages,
     onPageChange,
@@ -39,4 +39,4 @@ const AgentsDataPagination = ({
     );
 };
 
-export default AgentsDataPagination;
+export default DataPagination;
