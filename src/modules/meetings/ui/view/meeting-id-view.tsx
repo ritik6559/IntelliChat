@@ -6,11 +6,14 @@ import {useMutation, useQueryClient, useSuspenseQuery} from "@tanstack/react-que
 import LoadingState from "@/components/loading-state";
 import ErrorState from "@/components/error-state";
 import MeetingIdViewHeader from "@/modules/meetings/ui/components/meeting-id-view-header";
-import {useMeetingsFilter} from "@/modules/meetings/hooks/use-meetings-filter";
 import {useRouter} from "next/navigation";
 import {toast} from "sonner";
 import useConfirm from "@/modules/agents/hooks/use-confirm";
 import UpdateMeetingDialog from "@/modules/meetings/ui/components/update-meeting-dialog";
+import UpcomingState from "@/modules/meetings/ui/components/upcoming-state";
+import ActiveState from "@/modules/meetings/ui/components/active-state";
+import CancelledState from "@/modules/meetings/ui/components/cancelled-state";
+import ProcessingState from "@/modules/meetings/ui/components/processing-state";
 
 interface Props {
     meetingId: string
@@ -49,7 +52,7 @@ const MeetingIdView = ({
         "The meeting will be removed from the system. This action cannot be undone."
     )
 
-    const [updteMeetingDialogOpen, setUpdateMeetingDialogOpen] = useState(false);
+    const [updateMeetingDialogOpen, setUpdateMeetingDialogOpen] = useState(false);
 
     const handleRemoveMeeting = async () => {
         const ok = await confirmRemove();
@@ -61,11 +64,17 @@ const MeetingIdView = ({
         removeMeeting.mutate({id: meetingId})
     }
 
+    const isActive = data.status === "active";
+    const isUpcoming = data.status === "upcoming";
+    const isCancelled = data.status === "cancelled";
+    const isCompleted = data.status === "completed";
+    const isProcessing = data.status === "processing";
+
     return (
         <>
             <RemoveConfirmation />
             <UpdateMeetingDialog
-                open={updteMeetingDialogOpen}
+                open={updateMeetingDialogOpen}
                 onOpenChange={setUpdateMeetingDialogOpen}
                 initialValues={data}
             />
@@ -76,7 +85,17 @@ const MeetingIdView = ({
                     onEdit={() => setUpdateMeetingDialogOpen(true)}
                     onRemove={handleRemoveMeeting}
                 />
-                Meeting ID: View
+                {isCancelled && <CancelledState />}
+                {isProcessing && <ProcessingState />}
+                {isCompleted && <div>Completed</div>}
+                {isActive && <ActiveState meetingId={meetingId} />}
+                {
+                    isUpcoming && <UpcomingState
+                        meetingId={meetingId}
+                        onCancelMeeting={() => {}}
+                        isCancelling={false}
+                    />
+                }
             </div>
         </>
     );
