@@ -18,7 +18,7 @@ const CallEnded = () => {
                     <div
                         className={"flex flex-col gap-y-2 text-center"}
                     >
-                        <h6 className={"text-lg font-medium"} >You have ended the cal?</h6>
+                        <h6 className={"text-lg font-medium"} >You have ended the call?</h6>
                         <p className={"text-sm"} >Summary will appear in a few minutes</p>
                     </div>
                     <Button asChild >
