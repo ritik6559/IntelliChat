@@ -1,4 +1,4 @@
-import {createTRPCRouter, protectedProcedure} from "@/trpc/init";
+import {createTRPCRouter, premiumProcedure, protectedProcedure} from "@/trpc/init";
 import {db} from "@/db";
 import {agents, meetings, user} from "@/db/schema";
 import {z} from "zod";
@@ -11,6 +11,7 @@ import {streamVideo} from "@/lib/stream-video";
 import {generateAvatarUri} from "@/lib/avatar";
 import JSONL from "jsonl-parse-stringify";
 import {streamChat} from "@/lib/stream-chat";
+import {premiumRouter} from "@/modules/premium/server/route";
 
 export const meetingsRouter = createTRPCRouter({
     generateChatToken: protectedProcedure.mutation(async ({ctx}) => {
@@ -273,7 +274,7 @@ export const meetingsRouter = createTRPCRouter({
                 totalPages,
             };
         }),
-    create: protectedProcedure
+    create: premiumProcedure("meetings")
         .input(meetingsInsertSchema)
         .mutation(async ({ input, ctx }) => {
 

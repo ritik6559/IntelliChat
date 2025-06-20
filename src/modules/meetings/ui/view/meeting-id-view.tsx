@@ -34,14 +34,19 @@ const MeetingIdView = ({
 
     const router = useRouter()
 
-    const queryClint = useQueryClient();
+    const queryClient = useQueryClient();
 
     const removeMeeting = useMutation(
         trpc.meetings.remove.mutationOptions({
             onSuccess: async () => {
-                await queryClint.invalidateQueries(trpc.meetings.getMany.queryOptions({}));
+                await queryClient.invalidateQueries(trpc.meetings.getMany.queryOptions({}));
+                await queryClient.invalidateQueries(
+                    trpc.premium.getFreeUsage.queryOptions()
+                )
+
                 router.push("/meetings");
-            },
+                },
+
             onError: (error) => {
                 toast.error(error.message);
             }

@@ -11,6 +11,7 @@ import GeneratedAvatar from "@/components/generated-avatar";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {toast} from "sonner";
+import {useRouter} from "next/navigation";
 
 interface Props {
     onSuccess?: () => void;
@@ -26,6 +27,7 @@ const AgentForm = ({
 
     const trpc = useTRPC();
     const queryClient = useQueryClient();
+    const router = useRouter();
 
     const createAgent = useMutation(
         trpc.agents.create.mutationOptions({
@@ -34,10 +36,18 @@ const AgentForm = ({
                     trpc.agents.getMany.queryOptions({})
                 );
 
+                await queryClient.invalidateQueries(
+                    trpc.premium.getFreeUsage.queryOptions()
+                )
+
                 onSuccess?.();
             },
             onError: (error) => {
                 toast.error(error.message);
+
+                if(error.data?.code === "FORBIDDEN"){
+                    router.push("/upgrade")
+                }
 
             }
         })
