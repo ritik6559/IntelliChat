@@ -319,7 +319,7 @@ export async function POST(req: NextRequest){
                 image: avatarUrl
             });
 
-            channel.sendMessage({
+            await channel.sendMessage({
                 text: GPTResponseText,
                 user: {
                     id: existingAgent.id,
