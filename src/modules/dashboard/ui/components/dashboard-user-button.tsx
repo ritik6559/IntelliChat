@@ -131,6 +131,7 @@ const DashboardUserButton = () => {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                     className={"flex items-center justify-between cursor-pointer"}
+                    onClick={() => authClient.customer.portal()}
                 >
                     Billing
                     <CreditCardIcon className={"size-4"} />
