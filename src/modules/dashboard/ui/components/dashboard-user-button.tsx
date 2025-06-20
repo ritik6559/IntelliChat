@@ -73,6 +73,7 @@ const DashboardUserButton = () => {
                     <DrawerFooter>
                         <Button
                             variant={"outline"}
+                            onClick={() => authClient.customer.portal()}
                         >
                             Billing
                             <CreditCardIcon className={"size-4 text-black"} />

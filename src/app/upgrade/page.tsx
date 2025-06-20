@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import {getQueryClient, trpc} from "@/trpc/server";
 import {dehydrate, HydrationBoundary} from "@tanstack/react-query";
 import {auth} from "@/lib/auth";
 import {headers} from "next/headers";
 import {redirect} from "next/navigation";
+import {ErrorBoundary} from "react-error-boundary";
+import UpgradeView, {UpgradeViewError, UpgradeViewLoading} from "@/modules/premium/ui/views/upgrade-view";
 
-const Page = () => {
+const Page = async () => {
 
     const session = await auth.api.getSession({
         headers: await headers(),
@@ -25,7 +27,11 @@ const Page = () => {
 
     return (
         <HydrationBoundary state={dehydrate(queryClient)} >
-
+            <Suspense fallback={<UpgradeViewLoading />} >
+                <ErrorBoundary fallback={<UpgradeViewError />}>
+                    <UpgradeView />
+                </ErrorBoundary>
+            </Suspense>
         </HydrationBoundary>
     );
 };
