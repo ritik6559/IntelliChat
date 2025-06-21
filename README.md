@@ -1,36 +1,156 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# IntelliChat 🤖💬
 
-## Getting Started
+An intelligent video chat platform that allows users to create and interact with AI agents through real-time video conversations. Users can create custom AI agents, define their expertise topics, and engage in meaningful video discussions.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Custom AI Agents**: Create personalized AI agents with specific knowledge domains and personalities
+- **Video Chat Integration**: Real-time video and audio conversations with AI agents
+- **Topic-Specific Conversations**: AI agents are prompted and trained for specific topics and use cases
+- **User Authentication**: Secure authentication with GitHub and Google OAuth
+- **Payment Integration**: Subscription and payment management through Polar
+- **Real-time Communication**: Powered by Stream SDK for seamless video/audio chat experience
+- **Responsive Design**: Built with Next.js for optimal performance across devices
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 15+ with TypeScript
+- **Database**: PostgreSQL with Neon
+- **ORM**: Drizzle ORM
+- **API**: tRPC for type-safe APIs
+- **Authentication**: Better Auth with OAuth providers
+- **Video/Audio**: Stream SDK for real-time communication
+- **Payments**: Polar for subscription management
+- **Background Jobs**: Inngest for async processing
+- **Deployment**: Vercel
+- **AI Integration**: OpenAI API
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+- PostgreSQL database (Neon recommended)
+- Stream account for video/chat services
+- OpenAI API key
+- OAuth app credentials (GitHub, Google)
+- Polar account for payments
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/ritik6559/IntelliChat.git
+   cd IntelliChat
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env.local
+   ```
+   
+   Fill in your environment variables (see Environment Variables section below)
+
+4. **Set up the database**
+   ```bash
+   npm run db:push
+   # or
+   yarn db:push
+   ```
+
+5. **Run the development server**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+6. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 🔧 Environment Variables
+
+Create a `.env.local` file in the root directory with the following variables:
+
+```env
+# Database
+DATABASE_URL=your_neon_database_url
+
+# Authentication
+BETTER_AUTH_SECRET=your_auth_secret_key
+BETTER_AUTH_URL=http://localhost:3000
+
+# OAuth Providers
+GITHUB_CLIENT_ID=your_github_client_id
+GITHUB_CLIENT_SECRET=your_github_client_secret
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+# App Configuration
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# Stream SDK (Video & Chat)
+NEXT_PUBLIC_STREAM_VIDEO_API_KEY=your_stream_video_api_key
+STREAM_VIDEO_SECRET_KEY=your_stream_video_secret_key
+NEXT_PUBLIC_STREAM_CHAT_API_KEY=your_stream_chat_api_key
+STREAM_CHAT_SECRET_KEY=your_stream_chat_secret_key
+
+# OpenAI
+OPENAI_API_KEY=your_openai_api_key
+
+# Payments
+POLAR_ACCESS_TOKEN=your_polar_access_token
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📖 Usage
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Creating an AI Agent
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Sign in to your account
+2. Navigate to "Create Agent"
+3. Define your agent's:
+   - Name and description
+   - Area of expertise/topic
+   - Personality traits
+   - Conversation style
+4. Save your agent
 
-## Learn More
+### Starting a Video Chat
 
-To learn more about Next.js, take a look at the following resources:
+1. Browse available agents or select your created agents
+2. Click "Start Video Chat"
+3. Allow camera and microphone permissions
+4. Begin your conversation with the AI agent
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Managing Subscriptions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Access premium features through Polar integration
+- Manage billing and subscription plans
+- Track usage and limits
 
-## Deploy on Vercel
+## 🤝 Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+We welcome contributions! Please follow these steps:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+
+- [Stream](https://getstream.io/) for video/chat infrastructure
+- [OpenAI](https://openai.com/) for AI capabilities
+- [Vercel](https://vercel.com/) for deployment platform
+- [Neon](https://neon.tech/) for database hosting
+
+---
+(Video chat might now wrok due to not sufficcient openai api credist)
