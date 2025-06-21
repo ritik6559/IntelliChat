@@ -153,4 +153,4 @@ We welcome contributions! Please follow these steps:
 - [Neon](https://neon.tech/) for database hosting
 
 ---
-(Video chat might now wrok due to not sufficcient openai api credist)
+(Video chat might now work due to not sufficcient openai api credist)
