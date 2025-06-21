@@ -11,7 +11,6 @@ import {streamVideo} from "@/lib/stream-video";
 import {generateAvatarUri} from "@/lib/avatar";
 import JSONL from "jsonl-parse-stringify";
 import {streamChat} from "@/lib/stream-chat";
-import {premiumRouter} from "@/modules/premium/server/route";
 
 export const meetingsRouter = createTRPCRouter({
     generateChatToken: protectedProcedure.mutation(async ({ctx}) => {

@@ -98,8 +98,6 @@ const MeetingIdView = ({
                 {
                     isUpcoming && <UpcomingState
                         meetingId={meetingId}
-                        onCancelMeeting={() => {}}
-                        isCancelling={false}
                     />
                 }
             </div>

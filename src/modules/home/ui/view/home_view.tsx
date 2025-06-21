@@ -1,9 +1,9 @@
 'use client'
 
 import React from 'react';
-import {Button} from "@/components/ui/button";
 import {authClient} from "@/lib/auth-client";
 import {useRouter} from "next/navigation";
+import {MeetingsViewLoading} from "@/modules/meetings/ui/view/meetings-view";
 
 const HomeView = () => {
 
@@ -12,15 +12,11 @@ const HomeView = () => {
 
     if( !session ){
         return (
-            <p>Loading...</p>
+            <MeetingsViewLoading />
         )
     }
 
-    return (
-        <div className={"flex flex-col p-4 gap-y-4"} >
-
-        </div>
-    );
+    router.push("/meetings");
 };
 
 export default HomeView;

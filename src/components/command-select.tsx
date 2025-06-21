@@ -24,7 +24,6 @@ const CommandSelect = ({
     onSearch,
     value,
     placeholder = "Select an option",
-    isSearchable,
     className,
 }: Props) => {
 

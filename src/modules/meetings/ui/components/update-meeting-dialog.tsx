@@ -1,7 +1,6 @@
 import React from 'react';
 import ResponsiveDialog from "@/components/responsive-dialog";
 import MeetingForm from "@/modules/meetings/ui/components/meeting-form";
-import {useRouter} from "next/navigation";
 import {MeetingGetOne} from "@/modules/meetings/types";
 
 interface Props {
@@ -16,7 +15,6 @@ const UpdateMeetingDialog = ({
     initialValues
                           }: Props) => {
 
-    const router = useRouter()
 
     return (
         <ResponsiveDialog

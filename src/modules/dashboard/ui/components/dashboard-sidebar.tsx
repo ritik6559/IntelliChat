@@ -62,7 +62,7 @@ const DashboardSidebar = () => {
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {
-                                firstSection.map((item, index) => (
+                                firstSection.map((item) => (
                                     <SidebarMenuItem
                                         key={item.href}
                                     >
@@ -93,7 +93,7 @@ const DashboardSidebar = () => {
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {
-                                secondSection.map((item, index) => (
+                                secondSection.map((item) => (
                                     <SidebarMenuItem
                                         key={item.href}
                                     >
